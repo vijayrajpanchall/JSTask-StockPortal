@@ -92,11 +92,11 @@ uploadButton.addEventListener("click", function (event) {
     reader.onload = function (event) {
       // Parse the uploaded JSON data
       const priceData = JSON.parse(event.target.result);
-
       // Update table prices based on the parsed JSON
       updateTablePrices(priceData);
 
-      handlePandL(priceData);
+      //calculate total profit or loss based on the parsed JSON price change data
+      // calculateTotalProfitLoss(priceData);
     };
   } else {
     // Handle scenario where no file is selected (optional)
@@ -106,6 +106,9 @@ uploadButton.addEventListener("click", function (event) {
 
 function updateTablePrices(priceData) {
   const table = document.getElementById("stockTable");
+
+  let totalInvestedAmount = 0;
+  let totalPLAmount = 0;
 
   for (let i = 1; i < table.rows.length; i++) {
     const row = table.rows[i];
@@ -125,6 +128,33 @@ function updateTablePrices(priceData) {
         (currentInvestedAmount + matchingPrice.newPrice * currentQuantity) /
         (currentQuantity + currentQuantity); // Consider buying same quantity again at new price
       row.cells[3].textContent = newAveragePrice.toFixed(2); // Round to 2 decimal places
+
+      //  const currentQuantity = parseInt(row.cells[2].textContent);
+      const investedAmount = parseInt(row.cells[1].textContent);
+      const currentPrice = parseFloat(row.cells[4].textContent);
+
+      // Calculate P&L Amount
+      const plAmount =
+        (currentPrice - investedAmount / currentQuantity) * currentQuantity;
+      const plCell = row.insertCell(5); // Insert a new cell for P&L amount at index 5
+      plCell.textContent = plAmount.toFixed(2);
+
+      // Calculate P&L Percentage
+      const plPercentage = (plAmount / investedAmount) * 100;
+      const plPercentageCell = row.insertCell(6); // Insert a new cell for P&L percentage at index 6
+      plPercentageCell.textContent = plPercentage.toFixed(2) + "%";
+
+      totalInvestedAmount += investedAmount;
+      totalPLAmount += plAmount;
+
+      const overallPLPercentage = (totalPLAmount / totalInvestedAmount) * 100;
+
+      console.log("Total Invested Amount:", totalInvestedAmount);
+      console.log("Total P&L Amount:", totalPLAmount);
+      console.log(
+        "Overall P&L Percentage:",
+        overallPLPercentage.toFixed(2) + "%"
+      );
     } else {
       // Handle scenario where no price is found for the stock (optional)
       console.log(`Price not found for stock: ${stockName}`);
