@@ -1,22 +1,14 @@
-function openForm() {
-  document.getElementById("myForm").style.display = "flex";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-
 const form = document.getElementById("myForm");
 const table = document.getElementById("stockTable");
-
 const popup = document.getElementById("myPopup");
+const formButton = document.getElementById("myButton");
+const uploadButton = document.getElementById("uploadButton");
+const fileInput = document.getElementById("fileInput");
 
 popup.addEventListener("click", (event) => {
   const myTable = document.getElementById("stockTable");
   myTable.style.filter = "blur(5px)";
 });
-
-const formButton = document.getElementById("myButton");
 
 formButton.addEventListener("click", (event) => {
   const myTable = document.getElementById("stockTable");
@@ -79,30 +71,28 @@ form.addEventListener("submit", (event) => {
   //   form.reset();
 });
 
-const uploadButton = document.getElementById("uploadButton");
-const fileInput = document.getElementById("fileInput");
-
 uploadButton.addEventListener("click", function (event) {
-  // Get the selected file from the input element
   const uploadedFile = fileInput.files[0];
 
   if (uploadedFile) {
     const reader = new FileReader();
     reader.readAsText(uploadedFile);
     reader.onload = function (event) {
-      // Parse the uploaded JSON data
       const priceData = JSON.parse(event.target.result);
-      // Update table prices based on the parsed JSON
       updateTablePrices(priceData);
-
-      //calculate total profit or loss based on the parsed JSON price change data
-      // calculateTotalProfitLoss(priceData);
     };
   } else {
-    // Handle scenario where no file is selected (optional)
     console.log("No file selected");
   }
 });
+
+function openForm() {
+  document.getElementById("myForm").style.display = "flex";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
 
 function updateTablePrices(priceData) {
   const table = document.getElementById("stockTable");
@@ -113,51 +103,43 @@ function updateTablePrices(priceData) {
   for (let i = 1; i < table.rows.length; i++) {
     const row = table.rows[i];
     const stockName = row.cells[0].textContent;
-
-    // Find matching price data for the current stock name
     const matchingPrice = priceData.find(
       (priceObject) => priceObject.name === stockName
     );
 
     if (matchingPrice) {
-      // Update the average price with weighted average calculation
       const currentQuantity = parseInt(row.cells[2].textContent);
       const currentInvestedAmount = parseInt(row.cells[1].textContent);
       row.cells[4].textContent = matchingPrice.newPrice;
       const newAveragePrice =
         (currentInvestedAmount + matchingPrice.newPrice * currentQuantity) /
-        (currentQuantity + currentQuantity); // Consider buying same quantity again at new price
-      row.cells[3].textContent = newAveragePrice.toFixed(2); // Round to 2 decimal places
+        (currentQuantity + currentQuantity);
+      row.cells[3].textContent = newAveragePrice.toFixed(2);
 
-      //  const currentQuantity = parseInt(row.cells[2].textContent);
       const investedAmount = parseInt(row.cells[1].textContent);
       const currentPrice = parseFloat(row.cells[4].textContent);
 
-      // Calculate P&L Amount
       const plAmount =
         (currentPrice - investedAmount / currentQuantity) * currentQuantity;
-      const plCell = row.insertCell(5); // Insert a new cell for P&L amount at index 5
-      plCell.textContent = plAmount.toFixed(2);
-
-      // Calculate P&L Percentage
-      const plPercentage = (plAmount / investedAmount) * 100;
-      const plPercentageCell = row.insertCell(6); // Insert a new cell for P&L percentage at index 6
-      plPercentageCell.textContent = plPercentage.toFixed(2) + "%";
 
       totalInvestedAmount += investedAmount;
       totalPLAmount += plAmount;
-
-      const overallPLPercentage = (totalPLAmount / totalInvestedAmount) * 100;
-
-      console.log("Total Invested Amount:", totalInvestedAmount);
-      console.log("Total P&L Amount:", totalPLAmount);
-      console.log(
-        "Overall P&L Percentage:",
-        overallPLPercentage.toFixed(2) + "%"
-      );
     } else {
-      // Handle scenario where no price is found for the stock (optional)
       console.log(`Price not found for stock: ${stockName}`);
     }
   }
+  const overallPLPercentage = (totalPLAmount / totalInvestedAmount) * 100;
+  const overallPLPercentageCell = document.getElementById("profit_percentage");
+
+  const totalProfitOrLoss = totalPLAmount - totalInvestedAmount;
+
+  document.getElementById("profit_amount").textContent = totalProfitOrLoss;
+  document.getElementById("investedAmt").textContent = totalInvestedAmount;
+  document.getElementById("currentAmt").textContent = totalPLAmount;
+
+  overallPLPercentageCell.textContent = overallPLPercentage.toFixed(2) + "%";
+
+  console.log("Total Invested Amount:", totalInvestedAmount);
+  console.log("Total P&L Amount:", totalProfitOrLoss);
+  console.log("Overall P&L Percentage:", overallPLPercentage.toFixed(2) + "%");
 }

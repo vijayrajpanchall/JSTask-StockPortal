@@ -7,32 +7,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <table id="stockTable">
+    <table>
       <tr>
-        <th></th>
         <th>Invested</th>
         <th>Current</th>
-        <th></th>
-      </tr>
-      <tr>
-        <td>P&L</td>
-        <td colspan="2">+3,106.92 (+3.67%)</td>
-        <td>
+        <th>
           <button class="open-button" id="myPopup" onclick="openForm()">
             Buy Stocks
           </button>
-          <input type="file" id="fileInput">
-          <button id="uploadButton">Upload Prices</button>
-        </td>
+        </th>
+        <th>
+          <input type="file" id="fileInput" />
+          <button class="open-button" id="uploadButton">Upload Prices</button>
+        </th>
       </tr>
+      <tr>
+        <td id="investedAmt">84,746.88</td>
+        <td id="currentAmt">87,853.80</td>
+        <!-- <td>Update</td> -->
+      </tr>
+      <tr>
+        <th>P&L</th>
+        <!-- <td colspan="2" id="profit_cell">+3,106.92 (+3.67%)</td> -->
+        <td id="profit_amount">$$$.$$</td>
+        <td id="profit_percentage">(+%%.%%)</td>
+      </tr>
+    </table>
+    <table id="stockTable">
       <tr>
         <th>Name</th>
         <th>Invested Amount</th>
         <th>Quantity</th>
         <th>Avg Price</th>
         <th>Stock Price</th>
-        <th>P&L Amount</th>
-        <th>P&L %</th>
       </tr>
       <tr>
         <td class="stocks">Stock 1</td>
