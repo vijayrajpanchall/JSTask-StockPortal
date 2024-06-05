@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <table id="stockTable">
+      <tr>
+        <th></th>
+        <th>Invested</th>
+        <th>Current</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td>P&L</td>
+        <td colspan="2">+3,106.92 (+3.67%)</td>
+        <td>
+          <button class="open-button" id="myPopup" onclick="openForm()">
+            Buy Stocks
+          </button>
+          <input type="file" id="fileInput">
+          <button id="uploadButton">Upload Prices</button>
+        </td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Invested Amount</th>
+        <th>Quantity</th>
+        <th>Avg Price</th>
+        <th>Stock Price</th>
+      </tr>
+      <tr>
+        <td class="stocks">Stock 1</td>
+        <td>200</td>
+        <td>1</td>
+        <td>200</td>
+        <td>200</td>
+      </tr>
+      <tr>
+        <td class="stocks">Stock 2</td>
+        <td>5000</td>
+        <td>10</td>
+        <td>500</td>
+        <td>500</td>
+      </tr>
+      <tr>
+        <td class="stocks">Stock 3</td>
+        <td>300</td>
+        <td>30</td>
+        <td>10</td>
+        <td>10</td>
+      </tr>
+    </table>
+    <div class="form-popup" id="myForm">
+      <form class="form-container">
+        <label for="text"><b>Stock: </b></label>
+        <input type="text" placeholder="Select Stock" name="text" required />
+
+        <label for="qty"><b>Quantity: </b></label>
+        <input type="text" placeholder="Enter Quantity" name="qty" required />
+
+        <button type="submit" id="myButton" class="btn">Submit</button>
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

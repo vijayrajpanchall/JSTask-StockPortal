@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Stock 1",
+    "newPrice": 400
+  },
+  {
+    "name": "Stock 2",
+    "newPrice": 200
+  },
+  {
+    "name": "Stock 3",
+    "newPrice": 300
+  }
+]
