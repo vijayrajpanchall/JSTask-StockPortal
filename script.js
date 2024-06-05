@@ -143,3 +143,20 @@ function updateTablePrices(priceData) {
   console.log("Total P&L Amount:", totalProfitOrLoss);
   console.log("Overall P&L Percentage:", overallPLPercentage.toFixed(2) + "%");
 }
+
+
+const stockSelect = document.getElementById("stock");
+
+// Loop through the stock table rows (skip the header row)
+for (let i = 1; i < table.rows.length; i++) {
+  const row = table.rows[i];
+  const stockName = row.cells[0].textContent;
+
+  // Create a new option element for the dropdown
+  const option = document.createElement("option");
+  option.value = stockName;
+  option.textContent = stockName;
+
+  // Add the option to the dropdown
+  stockSelect.appendChild(option);
+}

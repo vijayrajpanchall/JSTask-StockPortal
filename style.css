@@ -139,3 +139,26 @@ button:hover {
 .form-container .btn:hover {
     opacity: 1;
 }
+
+/* Style the select element */
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+/* Style the options within the dropdown */
+.form-container select option {
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Style the dropdown when opened */
+.form-container select:focus {
+    border: 1px solid #aaa;
+    outline: none;
+}
