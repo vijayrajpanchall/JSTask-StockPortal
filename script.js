@@ -16,6 +16,7 @@ formButton.addEventListener("click", (event) => {
 
   closeForm();
 });
+
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // Prevent default form submission
 
@@ -35,16 +36,18 @@ form.addEventListener("submit", (event) => {
   if (existingRow) {
     // Update existing stock quantity and average price
     const currentQuantity = parseInt(existingRow.cells[2].textContent);
+    const currentAvgPrice = parseFloat(existingRow.cells[3].textContent);
     const newQuantity = currentQuantity + quantity;
-    existingRow.cells[2].textContent = newQuantity;
-    // Simulate price retrieval (replace with actual price logic based on uploaded JSON data)
-    const currentPrice = existingRow.cells[4].textContent;
-    let totalInvested = currentQuantity * existingRow.cells[4].textContent;
 
+    // Simulate price retrieval (replace with actual price logic based on uploaded JSON data)
+    const currentPrice = parseFloat(existingRow.cells[4].textContent);
     const newInvested = quantity * currentPrice;
-    totalInvested += newInvested;
-    existingRow.cells[3].textContent = totalInvested / newQuantity;
-    existingRow.cells[1].textContent = totalInvested;
+    const totalInvested = currentAvgPrice * currentQuantity + newInvested;
+    const newAvgPrice = totalInvested / newQuantity;
+
+    existingRow.cells[2].textContent = newQuantity;
+    existingRow.cells[1].textContent = totalInvested.toFixed(2);
+    existingRow.cells[3].textContent = newAvgPrice.toFixed(2);
   } else {
     // Create a new table row for the new stock
     const newRow = document.createElement("tr");
@@ -54,16 +57,20 @@ form.addEventListener("submit", (event) => {
     const quantityCell = document.createElement("td");
     quantityCell.textContent = quantity;
     const avgPriceCell = document.createElement("td");
+    const stockPriceCell = document.createElement("td");
 
     // Simulate price retrieval (replace with actual price logic based on uploaded JSON data)
     const currentPrice = 100; // Replace with actual price retrieval
+    const stockPrice = 200;
     avgPriceCell.textContent = currentPrice;
     const investedAmount = quantity * currentPrice;
-    investedCell.textContent = investedAmount;
+    investedCell.textContent = investedAmount.toFixed(2);
+    stockPriceCell.textContent = stockPrice;
     newRow.appendChild(stockCell);
     newRow.appendChild(investedCell);
     newRow.appendChild(quantityCell);
     newRow.appendChild(avgPriceCell);
+    newRow.appendChild(stockPriceCell);
     table.appendChild(newRow);
   }
 
@@ -109,14 +116,14 @@ function updateTablePrices(priceData) {
 
     if (matchingPrice) {
       const currentQuantity = parseInt(row.cells[2].textContent);
-      const currentInvestedAmount = parseInt(row.cells[1].textContent);
+    //   const currentInvestedAmount = parseFloat(row.cells[1].textContent);
       row.cells[4].textContent = matchingPrice.newPrice;
-      const newAveragePrice =
-        (currentInvestedAmount + matchingPrice.newPrice * currentQuantity) /
-        (currentQuantity + currentQuantity);
-      row.cells[3].textContent = newAveragePrice.toFixed(2);
+    //   const newAveragePrice =
+    //     (currentInvestedAmount + matchingPrice.newPrice * currentQuantity) /
+    //     (currentQuantity + currentQuantity);
+    //   row.cells[3].textContent = newAveragePrice.toFixed(2);
 
-      const investedAmount = parseInt(row.cells[1].textContent);
+      const investedAmount = parseFloat(row.cells[1].textContent);
       const currentPrice = parseFloat(row.cells[4].textContent);
 
       const plAmount =
@@ -133,9 +140,11 @@ function updateTablePrices(priceData) {
 
   const totalProfitOrLoss = totalPLAmount - totalInvestedAmount;
 
-  document.getElementById("profit_amount").textContent = totalProfitOrLoss;
-  document.getElementById("investedAmt").textContent = totalInvestedAmount;
-  document.getElementById("currentAmt").textContent = totalPLAmount;
+  document.getElementById("profit_amount").textContent =
+    totalProfitOrLoss.toFixed(2);
+  document.getElementById("investedAmt").textContent =
+    totalInvestedAmount.toFixed(2);
+  document.getElementById("currentAmt").textContent = totalPLAmount.toFixed(2);
 
   overallPLPercentageCell.textContent = overallPLPercentage.toFixed(2) + "%";
 
@@ -143,7 +152,6 @@ function updateTablePrices(priceData) {
   console.log("Total P&L Amount:", totalProfitOrLoss);
   console.log("Overall P&L Percentage:", overallPLPercentage.toFixed(2) + "%");
 }
-
 
 const stockSelect = document.getElementById("stock");
 
