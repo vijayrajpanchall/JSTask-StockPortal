@@ -1,7 +1,7 @@
 [
   {
     "name": "Stock 1",
-    "newPrice": 400
+    "newPrice": 100
   },
   {
     "name": "Stock 2",
@@ -10,5 +10,29 @@
   {
     "name": "Stock 3",
     "newPrice": 300
+  },
+  {
+    "name": "Stock 4",
+    "newPrice": 400
+  },
+  {
+    "name": "Stock 5",
+    "newPrice": 500
+  },
+  {
+    "name": "Stock 6",
+    "newPrice": 600
+  },
+  {
+    "name": "Stock 7",
+    "newPrice": 700
+  },
+  {
+    "name": "Stock 8",
+    "newPrice": 800
+  },
+  {
+    "name": "Stock 9",
+    "newPrice": 900
   }
 ]

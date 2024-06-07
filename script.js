@@ -167,3 +167,62 @@ for (let i = 1; i < table.rows.length; i++) {
   // Add the option to the dropdown
   stockSelect.appendChild(option);
 }
+
+document.getElementById("uploadButton").addEventListener("click", function () {
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    console.log("object", reader);
+    reader.onload = function (event) {
+      const data = JSON.parse(event.target.result);
+      console.log("data", data);
+      populateDropdown(data);
+      window.stockData = data; // Store the stock data for later use
+    };
+    reader.readAsText(file);
+  } else {
+    alert("Please select a file to upload.");
+  }
+});
+
+function populateDropdown(data) {
+  const select = document.getElementById("stock");
+  select.innerHTML = ""; // Clear existing options
+
+  data.forEach((stock) => {
+    const option = document.createElement("option");
+    option.value = stock.name;
+    option.textContent = stock.name;
+    option.setAttribute("data-price", stock.newPrice); // Store the price in a data attribute
+    select.appendChild(option);
+  });
+}
+
+document.getElementById("buyForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const stockName = document.getElementById("stock").value;
+  const quantity = parseInt(document.getElementById("qty").value, 10);
+  const stock = window.stockData.find((s) => s.name === stockName);
+
+  if (stock && quantity > 0) {
+    const currentPrice = stock.newPrice;
+    const investedAmount = currentPrice * quantity;
+    const avgBuyingPrice = currentPrice; // Assuming the current price as the buying price
+
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+      <td class="stocks">${stockName}</td>
+      <td>${investedAmount.toFixed(2)}</td>
+      <td>${quantity}</td>
+      <td>${avgBuyingPrice.toFixed(2)}</td>
+      <td>${currentPrice.toFixed(2)}</td>
+    `;
+
+    document.getElementById("stockTable").appendChild(newRow);
+    closeForm();
+  } else {
+    alert("Please select a valid stock and enter a valid quantity.");
+  }
+});

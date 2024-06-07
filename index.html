@@ -63,12 +63,18 @@
       </tr>
     </table>
     <div class="form-popup" id="myForm">
-      <form class="form-container">
+      <form class="form-container" id="buyForm">
         <label for="text"><b>Stock: </b></label>
         <!-- <input type="text" placeholder="Select Stock" name="text" required /> -->
         <select id="stock" name="Select Stock" required></select>
         <label for="qty"><b>Quantity: </b></label>
-        <input type="text" placeholder="Enter Quantity" name="qty" required />
+        <input
+          type="text"
+          id="qty"
+          placeholder="Enter Quantity"
+          name="qty"
+          required
+        />
 
         <button type="submit" id="myButton" class="btn">Submit</button>
       </form>
