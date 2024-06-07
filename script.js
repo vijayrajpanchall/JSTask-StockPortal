@@ -1,4 +1,4 @@
-const form = document.getElementById("myForm");
+
 const table = document.getElementById("stockTable");
 const popup = document.getElementById("myPopup");
 const formButton = document.getElementById("myButton");
@@ -17,10 +17,12 @@ formButton.addEventListener("click", (event) => {
   closeForm();
 });
 
+const form = document.getElementById("myForm");
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // Prevent default form submission
 
-  const stock = document.querySelector('input[name="text"]').value;
+  const stock = document.querySelector('select[name="Select Stock"]').value;
+  console.log(stock,"stock")
   const quantity = parseInt(document.querySelector('input[name="qty"]').value); // Ensure quantity is a number
 
   // Check if stock already exists in the table
@@ -73,9 +75,6 @@ form.addEventListener("submit", (event) => {
     newRow.appendChild(stockPriceCell);
     table.appendChild(newRow);
   }
-
-  // Clear form after successful submission (optional)
-  //   form.reset();
 });
 
 uploadButton.addEventListener("click", function (event) {
