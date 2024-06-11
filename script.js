@@ -84,19 +84,44 @@ function updateTablePrices(priceData = []) {
     ? (totalProfitOrLoss / totalInvestedAmount) * 100
     : 0;
 
-  document.getElementById("profit_amount").textContent =
-    totalProfitOrLoss.toFixed(2);
+  const profitAmountCell = document.getElementById("profit_amount");
+  const profitPercentageCell = document.getElementById("profit_percentage");
+
+  profitAmountCell.textContent = totalProfitOrLoss.toFixed(2);
+
+  if (totalProfitOrLoss >= 0) {
+    profitAmountCell.classList.remove("loss");
+    profitAmountCell.classList.add("profit");
+  } else {
+    profitAmountCell.classList.remove("profit");
+    profitAmountCell.classList.add("loss");
+  }
+
+  // Determine the sign for the percentage
+  const sign = overallPLPercentage >= 0 ? "+" : "-";
+
+  profitPercentageCell.textContent = `${sign}${Math.abs(
+    overallPLPercentage
+  ).toFixed(2)}%`;
+
+  if (overallPLPercentage >= 0) {
+    profitPercentageCell.classList.remove("loss");
+    profitPercentageCell.classList.add("profit");
+  } else {
+    profitPercentageCell.classList.remove("profit");
+    profitPercentageCell.classList.add("loss");
+  }
+
   document.getElementById("investedAmt").textContent =
     totalInvestedAmount.toFixed(2);
   document.getElementById("currentAmt").textContent =
     currentTotalValue.toFixed(2);
-  document.getElementById("profit_percentage").textContent =
-    overallPLPercentage.toFixed(2) + "%";
 
   console.log("Total Invested Amount:", totalInvestedAmount);
   console.log("Total P&L Amount:", totalProfitOrLoss);
   console.log("Overall P&L Percentage:", overallPLPercentage.toFixed(2) + "%");
 }
+
 
 function extractStockDataFromTable() {
   const data = [];
