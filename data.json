@@ -18,21 +18,5 @@
   {
     "name": "Stock 5",
     "newPrice": 500
-  },
-  {
-    "name": "Stock 6",
-    "newPrice": 600
-  },
-  {
-    "name": "Stock 7",
-    "newPrice": 700
-  },
-  {
-    "name": "Stock 8",
-    "newPrice": 800
-  },
-  {
-    "name": "Stock 9",
-    "newPrice": 900
   }
 ]
