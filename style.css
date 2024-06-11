@@ -162,3 +162,14 @@ button:hover {
     border: 1px solid #aaa;
     outline: none;
 }
+
+/* Define the styles for profit and loss */
+.profit {
+    color: green;
+    /* Change to your desired color for profit */
+}
+
+.loss {
+    color: red;
+    /* Change to your desired color for loss */
+}
