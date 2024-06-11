@@ -87,7 +87,7 @@ function updateTablePrices(priceData = []) {
   const profitAmountCell = document.getElementById("profit_amount");
   const profitPercentageCell = document.getElementById("profit_percentage");
 
-  profitAmountCell.textContent = totalProfitOrLoss.toFixed(2);
+  profitAmountCell.textContent = "Amount: " + totalProfitOrLoss.toFixed(2);
 
   if (totalProfitOrLoss >= 0) {
     profitAmountCell.classList.remove("loss");
@@ -121,7 +121,6 @@ function updateTablePrices(priceData = []) {
   console.log("Total P&L Amount:", totalProfitOrLoss);
   console.log("Overall P&L Percentage:", overallPLPercentage.toFixed(2) + "%");
 }
-
 
 function extractStockDataFromTable() {
   const data = [];
